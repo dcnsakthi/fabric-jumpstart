@@ -8,7 +8,7 @@
 set -euo pipefail
 
 if [ -z "${WEBSITE_STORAGE_CONN_STRING:-}" ]; then
-    echo "Skipping deployment: WEBSITE_STORAGE_CONN_STRING is not set or empty (expected on forks/repos without deployment secrets configured)."
+    echo "::warning::Skipping deployment: WEBSITE_STORAGE_CONN_STRING is not set or empty. This is expected on forks/repos without deployment secrets configured, but should NOT happen on the repository's main branch - verify the secret is configured if this is unexpected."
     exit 0
 fi
 
