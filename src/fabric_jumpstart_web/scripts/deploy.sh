@@ -7,7 +7,10 @@
 #
 set -euo pipefail
 
-[ -z "${WEBSITE_STORAGE_CONN_STRING:-}" ] && echo "Error: WEBSITE_STORAGE_CONN_STRING is not set or empty" >&2 && exit 1
+if [ -z "${WEBSITE_STORAGE_CONN_STRING:-}" ]; then
+    echo "::warning::Skipping deployment: WEBSITE_STORAGE_CONN_STRING is not set or empty. This is expected on forks/repos without deployment secrets configured, but should NOT happen on the repository's main branch - verify the secret is configured if this is unexpected."
+    exit 0
+fi
 
 GIT_ROOT=$(git rev-parse --show-toplevel)
 
